@@ -20,14 +20,13 @@ class Hungarian_Algorithm: NSObject {
             nodesArray[row][row] = nil
         }
         print(nodesArray)
-        var a = self.rowMinimization(mat: nodesArray)
-        print("booyah!!")
-        print(a)
+        let a = self.rowMinimization(mat: nodesArray)
+        let b = self.columnMinimization(mat: a)
+        
     }
     
     func findMinimum(matrix:[Int?]) -> Int {
         var min: Int
-        //for row in 0..<matrix.count{
             if matrix[0] != nil{
                 min  = 0
             }
@@ -39,7 +38,7 @@ class Hungarian_Algorithm: NSObject {
                     min = col                   //minimum value of row but not nil
                 }
             }
-        //}
+        
         return matrix[min]!
     }
     
@@ -54,7 +53,6 @@ class Hungarian_Algorithm: NSObject {
                 }
             }
         }
-//        print(matrix)
         return matrix
         
     }
@@ -66,8 +64,7 @@ class Hungarian_Algorithm: NSObject {
                 transpose[col][row] = matrix[row][col]
             }
         }
-        print("transpose")
-        print(transpose)
+        
         return transpose
     }
     
@@ -81,5 +78,13 @@ class Hungarian_Algorithm: NSObject {
         
     }
 
+    func findPanelty(mat: [[Int?]]) -> [[Int?]]  {
+        return [[]]
+    }
+    
+    
+    
+    
+    
     
 }

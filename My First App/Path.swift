@@ -233,26 +233,6 @@ class Path: UIView {
     
     func makeGraph()  {
         
-//        let nodeA = graph.addVertex(key: "A", coordinates: self.pointA)
-//        let nodeB = graph.addVertex(key: "B", coordinates: self.pointB)
-//        let nodeC = graph.addVertex(key: "C", coordinates: self.pointC)
-//        let nodeD = graph.addVertex(key: "D", coordinates: self.pointD)
-//        let nodeE = graph.addVertex(key: "E", coordinates: self.pointE)
-//        let nodeF = graph.addVertex(key: "F", coordinates: self.pointF)
-//        let nodeG = graph.addVertex(key: "G", coordinates: self.pointG)
-//        let nodeH = graph.addVertex(key: "H", coordinates: self.pointH)
-//        let nodeI = graph.addVertex(key: "I", coordinates: self.pointI)
-//        let nodeJ = graph.addVertex(key: "J", coordinates: self.pointJ)
-//        let nodeK = graph.addVertex(key: "K", coordinates: self.pointK)
-//        let nodeL = graph.addVertex(key: "L", coordinates: self.pointL)
-//        let nodeM = graph.addVertex(key: "M", coordinates: self.pointM)
-//        let nodeN = graph.addVertex(key: "N", coordinates: self.pointN)
-//        let nodeO = graph.addVertex(key: "O", coordinates: self.pointO)
-//        let nodeP = graph.addVertex(key: "P", coordinates: self.pointP)
-//        let nodeQ = graph.addVertex(key: "Q", coordinates: self.pointQ)
-//        let nodeR = graph.addVertex(key: "R", coordinates: self.pointR)
-//        let nodeS = graph.addVertex(key: "G", coordinates: self.pointS)
-        
         graph.addEdge(source: nodeA, neighbor: nodeC, weight: Path.findDistance(a: pointA, b: pointC))
         graph.addEdge(source: nodeB, neighbor: nodeC, weight: Path.findDistance(a: pointB, b: pointC))
         graph.addEdge(source: nodeC, neighbor: nodeP, weight: Path.findDistance(a: pointC, b: pointP))
