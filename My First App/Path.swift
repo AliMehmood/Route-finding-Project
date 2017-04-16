@@ -226,7 +226,8 @@ class Path: UIView {
         makeGraph()
         
         
-        var hungarian  =  Hungarian_Algorithm(nodes: nodeA, nodeF, nodeH, nodeM, nodeN)
+        var hungarian  =  Hungarian_Algorithm()
+        hungarian.iteration(nodes: nodeA, nodeF, nodeH, nodeM, nodeN)
         
     }
     
