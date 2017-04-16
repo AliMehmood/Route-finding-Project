@@ -7,7 +7,7 @@ class Hungarian_Algorithm: NSObject {
     var nodesRow = [Node]()
     var nodesCol = [Node]()
     
-    func iteration(nodes: Node... ) -> Void{
+    func iteration(nodes: Node... ) -> [Node : Node]{
 //        print(nodes)
         nodesRow = nodes
         nodesCol = nodes
@@ -44,13 +44,14 @@ class Hungarian_Algorithm: NSObject {
         assignments[nodesRow.popLast()!] = nodesCol.popLast()
         
         print("Assignments are \(assignments)")
+        return assignments
     }
     
     
     func rowMinimization(mat: [[Int?]]) -> [[Int?]]{
         var matrix  = mat
         for row in 0..<matrix.count{
-            let min = findMinimum(matrix: matrix[row])
+            let min = Utility.findMinimum(matrix: matrix[row])
             for col in 0..<matrix.count {
                 if matrix[row][col] != nil{
                     matrix[row][col] = matrix[row][col]! - min!
@@ -63,9 +64,9 @@ class Hungarian_Algorithm: NSObject {
     
     func columnMinimization(mat: [[Int?]]) -> [[Int?]]{
 //        print(#function)
-        let tr = self.transpose(mat: mat)
+        let tr = Utility.transpose(mat: mat)
         let minMat = self.rowMinimization(mat: tr)
-        let final  = self.transpose(mat: minMat)
+        let final  = Utility.transpose(mat: minMat)
         
         return final
         
@@ -85,16 +86,16 @@ class Hungarian_Algorithm: NSObject {
             for col in 0..<mat[row].count {
                 
                 if mat[row][col] == 0 &&                            //select the column no containing 0
-                    !self.contains(a: visited, v: (row, col)){          //AND also check if zero is already visited or not
+                    !Utility.contains(a: visited, v: (row, col)){          //AND also check if zero is already visited or not
                     
-                    min = self.rowMinimum(rowArray: mat[row],column: col)
+                    min = Utility.rowMinimum(rowArray: mat[row],column: col)
                     visited.append((row: row, column: col))
                     
                     for r in 0..<mat.count {
                         colMat.append(mat[r][col])
                     }
                     
-                    min += self.rowMinimum(rowArray: colMat, column: row)
+                    min += Utility.rowMinimum(rowArray: colMat, column: row)
                     penalties[CGPoint.init(x: row, y: col)] = min
                 }
             }
@@ -127,86 +128,8 @@ class Hungarian_Algorithm: NSObject {
     }
     
     
-    func checkZero(matrix: [[Int?]]) -> Bool {
-        var mat = matrix
-        var count = 0
-        for row in 0..<mat.count{
-            
-            for col in 0..<mat[row].count {
-                if mat[row][col] == 0{
-                    count += 1
-                }
-            }
-            if count == 0{
-                let min = findMinimum(matrix: mat[row])
-                for col in 0..<mat.count {
-                    if mat[row][col] != nil{
-                        mat[row][col] = mat[row][col]! - min!
-                    }
-                }
-            }
-        }
-        return true
-    }
-    
-    
     //MARK: Helping functions
-    func contains(a:[(Int, Int)], v:(Int,Int)) -> Bool {
-        let (c1, c2) = v
-        for (v1, v2) in a { if v1 == c1 && v2 == c2 { return true } }
-        return false
-    }
-    
-    
-    func rowMinimum(rowArray : [Int?], column: Int) -> Int {
-        var min: Int = 0
         
-        for i in 0..<rowArray.count{                    //initally set minimum
-            if rowArray[i] != nil{
-                min = i
-                break
-            }
-        }
-        for col in min..<rowArray.count{
-            if rowArray[col] != nil && col != column {
-                if rowArray[col]! < rowArray[min]! {
-                    min = col                   //minimum value of row but not nil
-                }
-            }
-        }
-        return rowArray[min]!
-    }
-    
-    func transpose(mat: [[Int?]]) -> [[Int?]] {
-        var transpose = [[Int?]]()
-        for row in 0..<mat.count{
-            var rowArray = [Int?]()
-            for col in 0..<mat[row].count {
-                rowArray.append(mat[col][row])
-            }
-            transpose.append(rowArray)
-        }
-        return transpose
-    }
-    
-    
-    func findMinimum(matrix:[Int?]) -> Int? {
-        var min: Int
-        //for row in 0..<matrix.count{
-        if matrix[0] != nil{
-            min  = 0
-        }
-        else{
-            min = 1
-        }
-        for col in 0..<matrix.count{
-            if matrix[col] != nil && matrix[col]! < matrix[min]!{
-                min = col                   //minimum value of row but not nil
-            }
-        }
-        return matrix[min]
-    }
-    
 }
 extension CGPoint: Hashable {
     public var hashValue: Int {
