@@ -16,7 +16,7 @@ class Hungarian_Algorithm: NSObject {
         
         for row in 0..<nodes.count{     //fill the matrix with weights
             for col in 0..<nodes.count {
-                nodesArray[row][col] = Path.findDistance(a: CGPoint(x: nodes[row].x, y: nodes[row].y), b: CGPoint(x: nodes[col].x, y: nodes[col].y))
+                nodesArray[row][col] = Utility.findDistance(a: CGPoint(x: nodes[row].x, y: nodes[row].y), b: CGPoint(x: nodes[col].x, y: nodes[col].y))
             }
         }
         

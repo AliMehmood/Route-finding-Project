@@ -227,41 +227,57 @@ class Path: UIView {
         
         
         var hungarian  =  Hungarian_Algorithm()
-        hungarian.iteration(nodes: nodeA, nodeF, nodeH, nodeM, nodeN)
+        hungarian.iteration(nodes: nodeA, nodeF, nodeH, nodeM, nodeL)
+        
         
     }
     
     
     func makeGraph()  {
         
-        graph.addEdge(source: nodeA, neighbor: nodeC, weight: Path.findDistance(a: pointA, b: pointC))
-        graph.addEdge(source: nodeB, neighbor: nodeC, weight: Path.findDistance(a: pointB, b: pointC))
-        graph.addEdge(source: nodeC, neighbor: nodeP, weight: Path.findDistance(a: pointC, b: pointP))
-        graph.addEdge(source: nodeC, neighbor: nodeD, weight: Path.findDistance(a: pointC, b: pointD))
-        graph.addEdge(source: nodeP, neighbor: nodeQ, weight: Path.findDistance(a: pointP, b: pointQ))
-        graph.addEdge(source: nodeQ, neighbor: nodeS, weight: Path.findDistance(a: pointQ, b: pointS))
-        graph.addEdge(source: nodeQ, neighbor: nodeR, weight: Path.findDistance(a: pointQ, b: pointR))
-        graph.addEdge(source: nodeP, neighbor: nodeO, weight: Path.findDistance(a: pointP, b: pointO))
-        graph.addEdge(source: nodeD, neighbor: nodeK, weight: Path.findDistance(a: pointD, b: pointK))
-        graph.addEdge(source: nodeD, neighbor: nodeE, weight: Path.findDistance(a: pointD, b: pointE))
-        graph.addEdge(source: nodeK, neighbor: nodeO, weight: Path.findDistance(a: pointK, b: pointO))
-        graph.addEdge(source: nodeK, neighbor: nodeL, weight: Path.findDistance(a: pointK, b: pointL))
-        graph.addEdge(source: nodeD, neighbor: nodeG, weight: Path.findDistance(a: pointD, b: pointG))
-        graph.addEdge(source: nodeG, neighbor: nodeJ, weight: Path.findDistance(a: pointG, b: pointJ))
-        graph.addEdge(source: nodeG, neighbor: nodeH, weight: Path.findDistance(a: pointG, b: pointH))
-        graph.addEdge(source: nodeH, neighbor: nodeF, weight: Path.findDistance(a: pointH, b: pointF))
-        graph.addEdge(source: nodeH, neighbor: nodeI, weight: Path.findDistance(a: pointH, b: pointI))
-        graph.addEdge(source: nodeJ, neighbor: nodeL, weight: Path.findDistance(a: pointJ, b: pointL))
-        graph.addEdge(source: nodeL, neighbor: nodeM, weight: Path.findDistance(a: pointL, b: pointM))
-        graph.addEdge(source: nodeN, neighbor: nodeO, weight: Path.findDistance(a: pointN, b: pointO))
+        graph.addEdge(source: nodeA, neighbor: nodeC, weight: Utility.findDistance(a: pointA, b: pointC))
+        graph.addEdge(source: nodeB, neighbor: nodeC, weight: Utility.findDistance(a: pointB, b: pointC))
+        graph.addEdge(source: nodeC, neighbor: nodeP, weight: Utility.findDistance(a: pointC, b: pointP))
+        graph.addEdge(source: nodeC, neighbor: nodeD, weight: Utility.findDistance(a: pointC, b: pointD))
+        graph.addEdge(source: nodeP, neighbor: nodeQ, weight: Utility.findDistance(a: pointP, b: pointQ))
+        graph.addEdge(source: nodeQ, neighbor: nodeS, weight: Utility.findDistance(a: pointQ, b: pointS))
+        graph.addEdge(source: nodeQ, neighbor: nodeR, weight: Utility.findDistance(a: pointQ, b: pointR))
+        graph.addEdge(source: nodeP, neighbor: nodeO, weight: Utility.findDistance(a: pointP, b: pointO))
+        graph.addEdge(source: nodeD, neighbor: nodeK, weight: Utility.findDistance(a: pointD, b: pointK))
+        graph.addEdge(source: nodeD, neighbor: nodeE, weight: Utility.findDistance(a: pointD, b: pointE))
+        graph.addEdge(source: nodeK, neighbor: nodeO, weight: Utility.findDistance(a: pointK, b: pointO))
+        graph.addEdge(source: nodeK, neighbor: nodeL, weight: Utility.findDistance(a: pointK, b: pointL))
+        graph.addEdge(source: nodeD, neighbor: nodeG, weight: Utility.findDistance(a: pointD, b: pointG))
+        graph.addEdge(source: nodeG, neighbor: nodeJ, weight: Utility.findDistance(a: pointG, b: pointJ))
+        graph.addEdge(source: nodeG, neighbor: nodeH, weight: Utility.findDistance(a: pointG, b: pointH))
+        graph.addEdge(source: nodeH, neighbor: nodeF, weight: Utility.findDistance(a: pointH, b: pointF))
+        graph.addEdge(source: nodeH, neighbor: nodeI, weight: Utility.findDistance(a: pointH, b: pointI))
+        graph.addEdge(source: nodeJ, neighbor: nodeL, weight: Utility.findDistance(a: pointJ, b: pointL))
+        graph.addEdge(source: nodeL, neighbor: nodeM, weight: Utility.findDistance(a: pointL, b: pointM))
+        graph.addEdge(source: nodeN, neighbor: nodeO, weight: Utility.findDistance(a: pointN, b: pointO))
         
+        nodeA.heuristic = Utility.findDistance(a: CGPoint(x: nodeA.x, y: nodeA.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeB.heuristic = Utility.findDistance(a: CGPoint(x: nodeB.x, y: nodeB.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeC.heuristic = Utility.findDistance(a: CGPoint(x: nodeC.x, y: nodeC.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeD.heuristic = Utility.findDistance(a: CGPoint(x: nodeD.x, y: nodeD.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeE.heuristic = Utility.findDistance(a: CGPoint(x: nodeE.x, y: nodeE.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeF.heuristic = Utility.findDistance(a: CGPoint(x: nodeF.x, y: nodeF.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeG.heuristic = Utility.findDistance(a: CGPoint(x: nodeG.x, y: nodeG.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeH.heuristic = Utility.findDistance(a: CGPoint(x: nodeH.x, y: nodeH.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeI.heuristic = Utility.findDistance(a: CGPoint(x: nodeI.x, y: nodeI.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeJ.heuristic = Utility.findDistance(a: CGPoint(x: nodeJ.x, y: nodeJ.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeK.heuristic = Utility.findDistance(a: CGPoint(x: nodeK.x, y: nodeK.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeM.heuristic = Utility.findDistance(a: CGPoint(x: nodeM.x, y: nodeM.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeN.heuristic = Utility.findDistance(a: CGPoint(x: nodeN.x, y: nodeN.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeO.heuristic = Utility.findDistance(a: CGPoint(x: nodeO.x, y: nodeO.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeP.heuristic = Utility.findDistance(a: CGPoint(x: nodeP.x, y: nodeP.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeQ.heuristic = Utility.findDistance(a: CGPoint(x: nodeQ.x, y: nodeQ.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeR.heuristic = Utility.findDistance(a: CGPoint(x: nodeR.x, y: nodeR.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+        nodeS.heuristic = Utility.findDistance(a: CGPoint(x: nodeS.x, y: nodeS.y), b: CGPoint(x: nodeL.x, y: nodeL.y))
+    
     }
     
     
     
-    static func findDistance(a: CGPoint, b: CGPoint) -> Int {
-        let xDist = a.x - b.x
-        let yDist = a.y - b.y
-        return Int(sqrt((xDist * xDist) + (yDist * yDist)))
-    }
+    
 }

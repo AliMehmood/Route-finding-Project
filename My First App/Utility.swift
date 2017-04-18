@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 class Utility{
     static func contains(a:[(Int, Int)], v:(Int,Int)) -> Bool {
         let (c1, c2) = v
@@ -64,4 +65,11 @@ class Utility{
         return matrix[min]
     }
 
+    
+    
+    static func findDistance(a: CGPoint, b: CGPoint) -> Int {
+        let xDist = a.x - b.x
+        let yDist = a.y - b.y
+        return Int(sqrt((xDist * xDist) + (yDist * yDist)))
+    }
 }
