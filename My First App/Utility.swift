@@ -69,7 +69,9 @@ class Utility{
     
     static func findDistance(a: CGPoint, b: CGPoint) -> Int {
         let xDist = a.x - b.x
+//        print(xDist)
         let yDist = a.y - b.y
+//        print(Int(sqrt((xDist * xDist) + (yDist * yDist))))
         return Int(sqrt((xDist * xDist) + (yDist * yDist)))
     }
 }

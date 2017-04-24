@@ -11,18 +11,25 @@ import UIKit
 class Node: NSObject {
 
     var name: String!
-    var neighbors: Array<Edge>?             // Edges associate with a node
+    var edges: Array<Edge>?             // Edges associate with a node
     let x: CGFloat!
     let y: CGFloat!
-    var heuristic : Int!
-    var f_n  : Int?
+    var heuristic = 0
+
+    var weight: Int!
+    var totalCost: Int!
     
     
     init(nodeName: String!, point: CGPoint!) {
         name = nodeName
         self.x =  point.x
         self.y = point.y
-        self.neighbors = Array<Edge>()
+        self.edges = Array<Edge>()
+    }
+    
+    
+    func heuristicCalculate(end: Node) -> Int {
+        return Utility.findDistance(a: CGPoint(x: self.x, y: self.y), b: CGPoint(x: end.x, y: end.y))
     }
     
 }

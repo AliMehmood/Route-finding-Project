@@ -7,8 +7,8 @@ class Hungarian_Algorithm: NSObject {
     var nodesRow = [Node]()
     var nodesCol = [Node]()
     
-    func iteration(nodes: Node... ) -> [Node : Node]{
-//        print(nodes)
+    func iteration(nodes: Node... ) -> [Node]{
+        //        print(nodes)
         nodesRow = nodes
         nodesCol = nodes
         var assignments  = [Node : Node]()
@@ -42,9 +42,43 @@ class Hungarian_Algorithm: NSObject {
             
         }
         assignments[nodesRow.popLast()!] = nodesCol.popLast()
-        
+        var sequence = [Node]()
         print("Assignments are \(assignments)")
-        return assignments
+//        for (key, val) in assignments {
+//            if key == nodes.first{
+//                sequence.append(key)
+//                sequence.append(val)
+//                assignments.removeValue(forKey: key)
+//                break
+//            }
+//        }
+        for i in 0..<assignments.count {
+            
+            if i == 0 {
+                for (key, val) in assignments {
+                    if key == nodes.first{
+                        sequence.append(key)
+                        sequence.append(val)
+                        assignments.removeValue(forKey: key)
+                        break
+                    }
+                }
+            }
+            else{
+                for (key, val) in assignments {
+                    if sequence[i] == key{
+//                        sequence.append(key)
+                        sequence.append(val)
+                        assignments.removeValue(forKey: key)
+                        break
+                    }
+                }
+            }
+            
+        }
+        
+        
+        return sequence
     }
     
     
@@ -63,7 +97,7 @@ class Hungarian_Algorithm: NSObject {
     
     
     func columnMinimization(mat: [[Int?]]) -> [[Int?]]{
-//        print(#function)
+        //        print(#function)
         let tr = Utility.transpose(mat: mat)
         let minMat = self.rowMinimization(mat: tr)
         let final  = Utility.transpose(mat: minMat)
@@ -74,7 +108,7 @@ class Hungarian_Algorithm: NSObject {
     
     
     func Penalty(mat: [[Int?]]) -> [CGPoint: Int] {
-//        print(#function)
+        //        print(#function)
         typealias mytuple = (row: Int, column: Int)
         var penalties = [CGPoint: Int]()
         var visited = [mytuple]()
@@ -100,13 +134,13 @@ class Hungarian_Algorithm: NSObject {
                 }
             }
         }
-//        print(mat.count)
+        //        print(mat.count)
         
         return penalties
     }
     
     func strikeOff(mat: [[Int?]], panelties: [CGPoint: Int]) -> ((Int, Int),[[Int?]]) {
-//        print(#function)
+        //        print(#function)
         var matrix = mat
         var max =  panelties.values.first
         var points  = panelties.keys.first
@@ -129,7 +163,7 @@ class Hungarian_Algorithm: NSObject {
     
     
     //MARK: Helping functions
-        
+    
 }
 extension CGPoint: Hashable {
     public var hashValue: Int {

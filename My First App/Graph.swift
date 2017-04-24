@@ -22,12 +22,13 @@ class Graph: NSObject {
     }
     
     //create a new vertex
-    func addVertex(key: String, coordinates: CGPoint!) -> Node {
+    func addVertex(key: String, coordinates: CGPoint!, endpoints: CGPoint) -> Node {
         
         //set the key
         let childVertex: Node = Node(nodeName: key, point: coordinates)
         childVertex.name = key
-        
+//        childVertex.heuristic = 
+        childVertex.heuristic = Utility.findDistance(a: CGPoint(x: childVertex.x, y: childVertex.y), b: endpoints)
         //add the vertex to the graph canvas
         canvas.append(childVertex)
         return childVertex
@@ -39,13 +40,14 @@ class Graph: NSObject {
         
         //create a new edge
         let newEdge = Edge(w: weight, endNode: neighbor)
-        source.neighbors?.append(newEdge)
+        source.edges?.append(newEdge)
         
         //create a new reversed edge
         let reverseEdge = Edge(w: weight, endNode: source)
-        neighbor.neighbors?.append(reverseEdge)
+        neighbor.edges?.append(reverseEdge)
 
     }
+    
     
     
     

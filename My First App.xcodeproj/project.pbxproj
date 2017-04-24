@@ -73,7 +73,6 @@
 		145BD1A51E92332900521157 /* MODELS */ = {
 			isa = PBXGroup;
 			children = (
-				14B037AA1E8D549100FDB909 /* Path.swift */,
 				145BD1A31E92322B00521157 /* Node.swift */,
 				145BD1A61E92337000521157 /* Edge.swift */,
 				145BD1A81E92466C00521157 /* Graph.swift */,
@@ -107,6 +106,7 @@
 			children = (
 				148DBA651E7012F600CAD14F /* Main.storyboard */,
 				1469F5181E8C429F00C080F1 /* MapViewController.swift */,
+				14B037AA1E8D549100FDB909 /* Path.swift */,
 				145BD1A51E92332900521157 /* MODELS */,
 				148DBA731E7021F300CAD14F /* Supporting Files */,
 			);
