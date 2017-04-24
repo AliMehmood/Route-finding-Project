@@ -156,8 +156,11 @@ class Path: UIView {
         var sequence = hungarian.iteration(nodes: nodeA, nodeF, nodeH, nodeM, nodeL)
         sequence.removeLast()
         for i in 0..<sequence.count{
-            let label = UILabel(frame: CGRect(origin: CGPoint(x: sequence[i].x, y: sequence[i].y), size: CGSize(width: 10, height: 10)))
-            label.textColor =  UIColor.white
+            var label = UILabel(frame: CGRect(origin: CGPoint(x: sequence[i].x-10, y: sequence[i].y), size: CGSize(width: 20, height: 20)))
+            if sequence[i].name == "A" || sequence[i].name == "F"{
+                label = UILabel(frame: CGRect(origin: CGPoint(x: sequence[i].x-10, y: sequence[i].y-90), size: CGSize(width: 20, height: 20)))
+            }
+            label.textColor =  UIColor.black
             label.text = String(i+1)
             self.addSubview(label)
         }
