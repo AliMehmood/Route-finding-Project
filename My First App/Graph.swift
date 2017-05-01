@@ -11,26 +11,14 @@ import UIKit
 class Graph: NSObject {
     
 
-    private var canvas: Array<Node>
-    public var isDirected: Bool
     
-    
-    override init()
-    {
-        canvas = Array<Node>()
-        isDirected = false
-    }
+//    public var isDirected  = false
     
     //create a new vertex
     func addVertex(key: String, coordinates: CGPoint!, endpoints: CGPoint) -> Node {
         
         //set the key
-        let childVertex: Node = Node(nodeName: key, point: coordinates)
-        childVertex.name = key
-//        childVertex.heuristic = 
-        childVertex.heuristic = Utility.findDistance(a: CGPoint(x: childVertex.x, y: childVertex.y), b: endpoints)
-        //add the vertex to the graph canvas
-        canvas.append(childVertex)
+        let childVertex: Node = Node(nodeName: key, point: coordinates, heuristic: Utility.findDistance(a: coordinates, b: endpoints))
         return childVertex
     }
     
@@ -47,10 +35,5 @@ class Graph: NSObject {
         neighbor.edges?.append(reverseEdge)
 
     }
-    
-    
-    
-    
-    
     
 }

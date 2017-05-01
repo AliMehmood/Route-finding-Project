@@ -20,16 +20,14 @@ class Node: NSObject {
     var totalCost: Int!
     
     
-    init(nodeName: String!, point: CGPoint!) {
+    init(nodeName: String!, point: CGPoint!, heuristic: Int) {
         name = nodeName
         self.x =  point.x
         self.y = point.y
+        self.heuristic = heuristic
         self.edges = Array<Edge>()
     }
     
     
-    func heuristicCalculate(end: Node) -> Int {
-        return Utility.findDistance(a: CGPoint(x: self.x, y: self.y), b: CGPoint(x: end.x, y: end.y))
-    }
-    
+        
 }

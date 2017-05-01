@@ -8,6 +8,7 @@ class Hungarian_Algorithm: NSObject {
     var nodesCol = [Node]()
     
     func iteration(nodes: Node... ) -> [Node]{
+         print(#function)
         //        print(nodes)
         nodesRow = nodes
         nodesCol = nodes

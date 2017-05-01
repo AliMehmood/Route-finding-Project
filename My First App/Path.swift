@@ -139,23 +139,29 @@ class Path: UIView {
     override func draw(_ rect: CGRect) {
 //        print(#function)
         
+//        let arr :Array<Node> = []
         let context = UIGraphicsGetCurrentContext()
         context?.setLineWidth(3.0)
         context?.setStrokeColor(UIColor.blue.cgColor)
         
-        let pointsArray = [pointA , pointC, pointB, pointC, pointP, pointQ, pointS, pointQ, pointR, pointQ, pointP
-                    , pointO, pointN, pointO, pointK, pointL, pointM, pointD, pointE, pointG, pointH, pointF, pointI, pointH, pointG, pointJ, pointL]
-        context?.addLines(between: pointsArray)
-        //context?.strokePath()
-        self.endpoints = pointL
+        var pointsArray: [CGPoint] = []
+        
+        
+        
         initializeNodes()
         makeGraph()
         
-        
+        print(#function)
         let hungarian  =  Hungarian_Algorithm()
-        var sequence = hungarian.iteration(nodes: nodeA, nodeF, nodeH, nodeM, nodeL)
+        var sequence = hungarian.iteration(nodes: nodeK, nodeH, nodeD, nodeJ)
         sequence.removeLast()
-        for i in 0..<sequence.count{
+        
+        
+//        let array : Array<Node> = [self.nodeA,self.nodeB, self.nodeC, self.nodeD, self.nodeE, self.nodeF, self.nodeG, self.nodeH, self.nodeI, self.nodeJ,self.nodeK, self.nodeL, self.nodeM,self.nodeN, self.nodeP, self.nodeQ, self.nodeR, self.nodeS]
+//        
+        var count = 0
+        for i in 0..<sequence.count-1{
+            count += 1
             var label = UILabel(frame: CGRect(origin: CGPoint(x: sequence[i].x-10, y: sequence[i].y), size: CGSize(width: 20, height: 20)))
             if sequence[i].name == "A" || sequence[i].name == "F"{
                 label = UILabel(frame: CGRect(origin: CGPoint(x: sequence[i].x-10, y: sequence[i].y-90), size: CGSize(width: 20, height: 20)))
@@ -163,19 +169,58 @@ class Path: UIView {
             label.textColor =  UIColor.black
             label.text = String(i+1)
             self.addSubview(label)
+            let aStar = A_Star()
+            self.endpoints = CGPoint(x: sequence[i+1].x, y: sequence[i+1].y)            //  har baar heuristic change hoga q k destiny change hogi
+            let array = initializeNodes()                                                           // value of node would be change bcz heuristic will be change
+            makeGraph()
+            
+            //seeking for the recomputed start and end node with new heuristic
+            var start : Node!
+            for node in array{
+                if sequence[i].name == node.name{
+                    start  = node
+                    break
+                }
+            }
+            var end : Node!
+            for node in array{
+                if sequence[i+1].name == node.name{
+                    end = node
+                    break
+                }
+            }
+            let closeQueue = aStar.iterate(start: start, end: end)      //Path between two nodes is obtained here
+            
+            for node in closeQueue {
+                pointsArray.append(CGPoint(x: node.x, y: node.y))
+            }
+            //            context?.addLines(between: closeQueue)
+            
         }
+        let lastNode = sequence.removeLast()
+        var label = UILabel(frame: CGRect(origin: CGPoint(x: lastNode.x-10, y: lastNode.y), size: CGSize(width: 20, height: 20)))
+        if lastNode.name == "A" || lastNode.name == "F"{
+            label = UILabel(frame: CGRect(origin: CGPoint(x: lastNode.x-10, y: lastNode.y-90), size: CGSize(width: 20, height: 20)))
+        }
+        label.textColor =  UIColor.black
+        label.text = String(count+1)
+        self.addSubview(label)
+
+        pointsArray.append(CGPoint(x: lastNode.x, y: lastNode.y))
+        context?.addLines(between: pointsArray)
+        context?.strokePath()
+
         
         
-//        heuristicCalc(end: nodeL)
-//        let aStar = A_Star()
-//        print(nodeA.edges?.count)
-//        aStar.iterate(start: nodeA, end: nodeL)
         
         
         
     }
-    func initializeNodes()  {
-        nodeA = graph.addVertex(key: "A", coordinates: self.pointA, endpoints: endpoints)
+    
+    
+    
+    func initializeNodes() -> Array<Node> {
+        self.nodeA = graph.addVertex(key: "A", coordinates: self.pointA, endpoints: endpoints)
         nodeB = graph.addVertex(key: "B", coordinates: self.pointB, endpoints: endpoints)
         nodeC = graph.addVertex(key: "C", coordinates: self.pointC , endpoints: endpoints)
         nodeD = graph.addVertex(key: "D", coordinates: self.pointD, endpoints: endpoints)
@@ -195,9 +240,8 @@ class Path: UIView {
         nodeR = graph.addVertex(key: "R", coordinates: self.pointR, endpoints: endpoints)
         nodeS = graph.addVertex(key: "G", coordinates: self.pointS, endpoints: endpoints)
         
-        
-
-        
+        let array : Array<Node> = [nodeA,nodeB, nodeC, nodeD, nodeE, nodeF, nodeG, nodeH, nodeI, nodeJ,nodeK, nodeL, nodeM,nodeN, nodeP, nodeQ, nodeR, nodeS]
+        return array
     }
     
     
@@ -223,34 +267,9 @@ class Path: UIView {
         graph.addEdge(source: nodeJ, neighbor: nodeL, weight: Utility.findDistance(a: pointJ, b: pointL))
         graph.addEdge(source: nodeL, neighbor: nodeM, weight: Utility.findDistance(a: pointL, b: pointM))
         graph.addEdge(source: nodeN, neighbor: nodeO, weight: Utility.findDistance(a: pointN, b: pointO))
-        
-        
     }
     
-    func heuristicCalc(end: Node) {
-//        print((nodeA.x - end.x) + (nodeA.y - end.y))
-        nodeA.heuristic = Utility.findDistance(a: CGPoint(x: nodeA.x, y: nodeA.y), b: CGPoint(x: end.x, y: end.y))
-//        nodeA.heuristic = nodeA.heuristicCalculate(end: end)
-        print(Utility.findDistance(a: CGPoint(x: nodeA.x, y: nodeA.y), b: CGPoint(x: end.x, y: end.y)))
-        nodeB.heuristic = Utility.findDistance(a: CGPoint(x: nodeB.x, y: nodeB.y), b: CGPoint(x: end.x, y: end.y))
-        nodeC.heuristic = Utility.findDistance(a: CGPoint(x: nodeC.x, y: nodeC.y), b: CGPoint(x: end.x, y: end.y))
-        nodeD.heuristic = Utility.findDistance(a: CGPoint(x: nodeD.x, y: nodeD.y), b: CGPoint(x: end.x, y: end.y))
-        nodeE.heuristic = Utility.findDistance(a: CGPoint(x: nodeE.x, y: nodeE.y), b: CGPoint(x: end.x, y: end.y))
-        nodeF.heuristic = Utility.findDistance(a: CGPoint(x: nodeF.x, y: nodeF.y), b: CGPoint(x: end.x, y: end.y))
-        nodeG.heuristic = Utility.findDistance(a: CGPoint(x: nodeG.x, y: nodeG.y), b: CGPoint(x: end.x, y: end.y))
-        nodeH.heuristic = Utility.findDistance(a: CGPoint(x: nodeH.x, y: nodeH.y), b: CGPoint(x: end.x, y: end.y))
-        nodeI.heuristic = Utility.findDistance(a: CGPoint(x: nodeI.x, y: nodeI.y), b: CGPoint(x: end.x, y: end.y))
-        nodeJ.heuristic = Utility.findDistance(a: CGPoint(x: nodeJ.x, y: nodeJ.y), b: CGPoint(x: end.x, y: end.y))
-        nodeK.heuristic = Utility.findDistance(a: CGPoint(x: nodeK.x, y: nodeK.y), b: CGPoint(x: end.x, y: end.y))
-        nodeM.heuristic = Utility.findDistance(a: CGPoint(x: nodeM.x, y: nodeM.y), b: CGPoint(x: end.x, y: end.y))
-        nodeN.heuristic = Utility.findDistance(a: CGPoint(x: nodeN.x, y: nodeN.y), b: CGPoint(x: end.x, y: end.y))
-        nodeO.heuristic = Utility.findDistance(a: CGPoint(x: nodeO.x, y: nodeO.y), b: CGPoint(x: end.x, y: end.y))
-        nodeP.heuristic = Utility.findDistance(a: CGPoint(x: nodeP.x, y: nodeP.y), b: CGPoint(x: end.x, y: end.y))
-        nodeQ.heuristic = Utility.findDistance(a: CGPoint(x: nodeQ.x, y: nodeQ.y), b: CGPoint(x: end.x, y: end.y))
-        nodeR.heuristic = Utility.findDistance(a: CGPoint(x: nodeR.x, y: nodeR.y), b: CGPoint(x: end.x, y: end.y))
-        nodeS.heuristic = Utility.findDistance(a: CGPoint(x: nodeS.x, y: nodeS.y), b: CGPoint(x: end.x, y: end.y))
-
-    }
+    
     
     
     
